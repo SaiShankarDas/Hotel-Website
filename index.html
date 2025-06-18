@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine Haven - Fixed CTA Buttons</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --winter-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #ecf0f1 100%);
+            --gold: #d4af37;
+            --platinum: #e5e4e2;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: var(--primary-gradient);
+            cursor: none;
+        }
+
+        .cormorant {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .crimson {
+            font-family: 'Crimson Text', serif;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-hover {
+            transform: scale(2);
+            background: var(--gold);
+        }
+
+        /* Enhanced Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        .glass-premium {
+            background: rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 12px 40px 0 rgba(212, 175, 55, 0.2);
+        }
+
+        /* Advanced Snow Animation */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fall linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Particles */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Premium Text Effects */
+        .text-shimmer {
+            background: linear-gradient(45deg, #fff, var(--gold), #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                         0 0 40px rgba(255, 255, 255, 0.3),
+                         0 0 60px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Magnetic Button Effect */
+        .magnetic-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--gold), #f4e467);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .magnetic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .magnetic-btn:hover::before {
+            left: 100%;
+        }
+
+        .magnetic-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .magnetic-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Advanced Card Animations */
+        .premium-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .premium-card:hover::before {
+            opacity: 1;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating Animation */
+        .float {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Pulse Animation */
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
+        }
+
+        /* Premium Hover Effects */
+        .hover-scale {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.1);
+        }
+
+        /* Enhanced Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(50px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Success Animation */
+        .success-animation {
+            animation: successPulse 0.6s ease-in-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); background: linear-gradient(45deg, #10b981, #059669); }
+            100% { transform: scale(1); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--gold), #f4e467);
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #f4e467, var(--gold));
+        }
+
+        /* Luxury Divider */
+        .luxury-divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .luxury-divider::before {
+            content: '♦';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 1rem;
+            background: var(--primary-gradient);
+            padding: 0 10px;
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: 0.15em solid var(--gold);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--gold); }
+        }
+
+        /* Premium Gradients */
+        .winter-bg {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #ecf0f1 100%);
+        }
+
+        .winter-bg-2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .winter-bg-3 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .luxury-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        /* Loading Animation */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--gold);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem !important;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem !important;
+            }
+            .premium-card:hover {
+                transform: translateY(-10px);
+            }
+            body {
+                cursor: auto;
+            }
+            .custom-cursor {
+                display: none;
+            }
+        }
+
+        /* Performance Optimizations */
+        .will-change {
+            will-change: transform, opacity;
+        }
+
+        .gpu-accelerated {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000;
+        }
+
+        /* Luxury Border Animation */
+        .luxury-border {
+            position: relative;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(244, 228, 103, 0.3));
+            background-clip: padding-box;
+        }
+
+        .luxury-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, var(--gold), #f4e467, var(--gold));
+            background-size: 200% 200%;
+            animation: border-animation 3s ease infinite;
+        }
+
+        @keyframes border-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            transform: translateZ(0);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Tilt Effect */
+        .tilt {
+            transition: transform 0.3s ease;
+        }
+
+        .tilt:hover {
+            transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--gold), #f4e467);
+            color: black;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Snow Animation Container -->
+    <div id="snow-container"></div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="loader mx-auto mb-4"></div>
+            <h2 class="text-white text-xl cormorant">Alpine Haven</h2>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="notification-text">Success!</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 glass-premium transition-all duration-500 py-4" id="navbar">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-white font-bold text-3xl cormorant text-shimmer">Alpine Haven</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">Home</a>
+                <a href="#about" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">About</a>
+                <a href="#rooms" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">Rooms</a>
+                <a href="#amenities" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">Amenities</a>
+                <a href="#testimonials" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">Reviews</a>
+                <a href="#booking" class="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-110 relative nav-link">Book</a>
+            </div>
+            <button class="md:hidden text-white text-xl hover-scale" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-premium mt-4 py-4">
+            <div class="flex flex-col space-y-4 px-6">
+                <a href="#hero" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">Home</a>
+                <a href="#about" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">About</a>
+                <a href="#rooms" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">Rooms</a>
+                <a href="#amenities" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">Amenities</a>
+                <a href="#testimonials" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">Reviews</a>
+                <a href="#booking" class="text-white hover:text-yellow-300 transition-colors" onclick="closeMobileMenu()">Book</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center winter-bg relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute top-20 left-10 float">
+            <div class="w-20 h-20 rounded-full bg-white bg-opacity-10 blur-xl"></div>
+        </div>
+        <div class="absolute bottom-40 right-20 float" style="animation-delay: -2s;">
+            <div class="w-32 h-32 rounded-full bg-yellow-300 bg-opacity-20 blur-2xl"></div>
+        </div>
+        
+        <div class="text-center text-white z-10 px-6 will-change gpu-accelerated" data-aos="fade-up">
+            <h1 class="hero-title text-7xl md:text-9xl font-bold cormorant mb-6 text-glow">Alpine Haven</h1>
+            <div class="luxury-divider"></div>
+            <p class="hero-subtitle text-xl md:text-3xl mb-8 font-light crimson typewriter">Luxury Winter Retreat in the Heart of the Mountains</p>
+            <button class="magnetic-btn text-black px-10 py-5 rounded-full text-lg font-semibold transition-all duration-300 shadow-2xl will-change" onclick="scrollToBooking()">
+                <i class="fas fa-mountain mr-2"></i>
+                Begin Your Winter Journey
+            </button>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-32 left-1/4 float">
+            <i class="fas fa-snowflake text-4xl text-white opacity-30"></i>
+        </div>
+        <div class="absolute bottom-32 right-1/3 float" style="animation-delay: -3s;">
+            <i class="fas fa-gem text-3xl text-yellow-300 opacity-50"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 winter-bg-2 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-6xl font-bold cormorant text-white text-center mb-8 text-glow" data-aos="fade-up">Our Legacy</h2>
+                <div class="luxury-divider" data-aos="fade-up" data-aos-delay="100"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
+                    <div class="glass-premium rounded-3xl p-10 tilt" data-aos="fade-right" data-aos-delay="200">
+                        <h3 class="text-3xl font-bold cormorant text-white mb-6">A Mountain Paradise Since 1987</h3>
+                        <p class="text-white text-lg leading-relaxed mb-6 crimson">
+                            Nestled in the pristine Alpine mountains at 3,000 feet elevation, Alpine Haven represents the pinnacle of luxury winter hospitality. Our resort has been meticulously crafting unforgettable experiences for the world's most discerning travelers for over three decades.
+                        </p>
+                        <p class="text-white text-lg leading-relaxed mb-6 crimson">
+                            Every detail has been carefully curated by renowned architects and designers to create an atmosphere where modern sophistication seamlessly blends with timeless mountain elegance.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+                            <i class="fas fa-crown text-yellow-400 text-2xl pulse-glow"></i>
+                            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-8" data-aos="fade-left" data-aos-delay="300">
+                        <div class="glass rounded-2xl p-6 premium-card hover-scale">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-award text-3xl text-yellow-400 mr-4"></i>
+                                <h4 class="text-xl font-semibold text-white cormorant">World-Class Recognition</h4>
+                            </div>
+                            <p class="text-gray-200 crimson">Michelin Guide recognition, Forbes 5-Star rating, and Condé Nast Traveler's #1 Winter Resort</p>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-6 premium-card hover-scale" data-aos-delay="400">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-leaf text-3xl text-green-400 mr-4"></i>
+                                <h4 class="text-xl font-semibold text-white cormorant">Sustainable Luxury</h4>
+                            </div>
+                            <p class="text-gray-200 crimson">Carbon-neutral operations with locally sourced materials and renewable energy systems</p>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-6 premium-card hover-scale" data-aos-delay="500">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-users text-3xl text-blue-400 mr-4"></i>
+                                <h4 class="text-xl font-semibold text-white cormorant">Exclusive Experience</h4>
+                            </div>
+                            <p class="text-gray-200 crimson">Limited to 50 suites ensuring intimate, personalized service for every guest</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Statistics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-yellow-400 cormorant counter" data-target="37">0</div>
+                        <p class="text-white mt-2">Years of Excellence</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-yellow-400 cormorant counter" data-target="50">0</div>
+                        <p class="text-white mt-2">Luxury Suites</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-yellow-400 cormorant counter" data-target="98">0</div>
+                        <p class="text-white mt-2">% Guest Satisfaction</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-yellow-400 cormorant counter" data-target="24">0</div>
+                        <p class="text-white mt-2">Hour Concierge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms & Suites Section -->
+    <section id="rooms" class="py-24 winter-bg-3 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-6xl font-bold cormorant text-gray-800 text-center mb-8" data-aos="fade-up">Exquisite Accommodations</h2>
+            <div class="luxury-divider" data-aos="fade-up" data-aos-delay="100"></div>
+            <p class="text-center text-gray-600 text-xl crimson max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="200">
+                Each suite is a masterpiece of design, offering unparalleled comfort and breathtaking alpine vistas
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Alpine Suite -->
+                <div class="luxury-border rounded-3xl overflow-hidden premium-card cursor-pointer will-change" data-aos="fade-up" data-aos-delay="100" onclick="openModal('modal1')">
+                    <div class="h-80 bg-gradient-to-br from-blue-500 to-purple-700 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-mountain text-8xl text-white opacity-30"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="glass px-4 py-2 rounded-full text-sm font-semibold">Mountain View</span>
+                        </div>
+                        <div class="absolute top-6 right-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 bg-white">
+                        <h3 class="text-3xl font-bold cormorant text-gray-800 mb-3">Alpine Suite</h3>
+                        <p class="text-gray-600 mb-6 crimson">Panoramic mountain views with private balcony, fireplace, and luxury amenities</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-4xl font-bold text-purple-600 cormorant">$450<span class="text-lg">/night</span></span>
+                            <button class="magnetic-btn text-white px-6 py-3 rounded-lg font-semibold hover-scale" onclick="event.stopPropagation(); openModal('modal1')">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Royal Penthouse -->
+                <div class="luxury-border rounded-3xl overflow-hidden premium-card cursor-pointer will-change" data-aos="fade-up" data-aos-delay="200" onclick="openModal('modal2')">
+                    <div class="h-80 bg-gradient-to-br from-purple-500 to-pink-700 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-crown text-8xl text-white opacity-30"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="glass px-4 py-2 rounded-full text-sm font-semibold">Presidential</span>
+                        </div>
+                        <div class="absolute top-6 right-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-crown text-xl pulse-glow"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 bg-white">
+                        <h3 class="text-3xl font-bold cormorant text-gray-800 mb-3">Royal Penthouse</h3>
+                        <p class="text-gray-600 mb-6 crimson">Two-story luxury suite with private chef, spa services, and butler</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-4xl font-bold text-purple-600 cormorant">$850<span class="text-lg">/night</span></span>
+                            <button class="magnetic-btn text-white px-6 py-3 rounded-lg font-semibold hover-scale" onclick="event.stopPropagation(); openModal('modal2')">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Winter Cabin -->
+                <div class="luxury-border rounded-3xl overflow-hidden premium-card cursor-pointer will-change" data-aos="fade-up" data-aos-delay="300" onclick="openModal('modal3')">
+                    <div class="h-80 bg-gradient-to-br from-green-500 to-blue-600 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-home text-8xl text-white opacity-30"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="glass px-4 py-2 rounded-full text-sm font-semibold">Family Haven</span>
+                        </div>
+                        <div class="absolute top-6 right-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-heart text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 bg-white">
+                        <h3 class="text-3xl font-bold cormorant text-gray-800 mb-3">Winter Cabin</h3>
+                        <p class="text-gray-600 mb-6 crimson">Rustic luxury cabin perfect for families with modern amenities</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-4xl font-bold text-purple-600 cormorant">$320<span class="text-lg">/night</span></span>
+                            <button class="magnetic-btn text-white px-6 py-3 rounded-lg font-semibold hover-scale" onclick="event.stopPropagation(); openModal('modal3')">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="py-24 luxury-bg relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-6xl font-bold cormorant text-white text-center mb-8 text-glow" data-aos="fade-up">Exceptional Amenities</h2>
+            <div class="luxury-divider" data-aos="fade-up" data-aos-delay="100"></div>
+            <p class="text-center text-gray-300 text-xl crimson max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="200">
+                Indulge in world-class facilities designed to exceed your every expectation
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-spa text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Alpine Spa Sanctuary</h3>
+                    <p class="text-gray-300 crimson">Rejuvenating treatments with Swiss Alpine therapies and mountain stone massages</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-utensils text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Michelin Dining</h3>
+                    <p class="text-gray-300 crimson">Three-star restaurant featuring molecular gastronomy and local Alpine ingredients</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-skiing text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Ski Concierge</h3>
+                    <p class="text-gray-300 crimson">Private ski instructors and direct access to championship slopes</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-fire text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Fireside Sanctuary</h3>
+                    <p class="text-gray-300 crimson">Cozy lounges with roaring fireplaces and premium whiskey collection</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-dumbbell text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Wellness Center</h3>
+                    <p class="text-gray-300 crimson">State-of-the-art equipment with personal trainers and yoga masters</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-swimming-pool text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Infinity Pool</h3>
+                    <p class="text-gray-300 crimson">Heated infinity pool with underwater sound system and mountain panorama</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wine-glass text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Private Cellar</h3>
+                    <p class="text-gray-300 crimson">Exclusive wine cellar with rare vintages and sommelier-guided tastings</p>
+                </div>
+
+                <div class="glass-premium rounded-3xl p-8 text-center premium-card tilt" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-rose-400 to-red-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-concierge-bell text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 cormorant">Butler Service</h3>
+                    <p class="text-gray-300 crimson">24/7 personal butler service and bespoke experience curation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 winter-bg-2 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-6xl font-bold cormorant text-white text-center mb-8 text-glow" data-aos="fade-up">Distinguished Guests</h2>
+            <div class="luxury-divider" data-aos="fade-up" data-aos-delay="100"></div>
+            
+            <div class="swiper testimonial-swiper mt-16">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="glass-premium rounded-3xl p-12 text-center max-w-4xl mx-auto luxury-border" data-aos="fade-up">
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-quote-left text-4xl text-yellow-400 opacity-50"></i>
+                            </div>
+                            <p class="text-white text-2xl mb-8 italic cormorant leading-relaxed">"Alpine Haven transcends the ordinary definition of luxury. Every moment was orchestrated to perfection, from the private helicopter arrival to the champagne sunset on our suite's terrace. This is where dreams become reality."</p>
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                            </div>
+                            <div class="text-white">
+                                <h4 class="font-semibold text-xl cormorant">Lady Catherine Pemberton</h4>
+                                <p class="text-gray-300 crimson">British Aristocrat & Art Collector</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="glass-premium rounded-3xl p-12 text-center max-w-4xl mx-auto luxury-border" data-aos="fade-up">
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-quote-left text-4xl text-yellow-400 opacity-50"></i>
+                            </div>
+                            <p class="text-white text-2xl mb-8 italic cormorant leading-relaxed">"As someone who has experienced the finest resorts globally, I can confidently say Alpine Haven stands alone. The attention to detail, the culinary artistry, and the staff's anticipation of every need is unparalleled in the hospitality industry."</p>
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                            </div>
+                            <div class="text-white">
+                                <h4 class="font-semibold text-xl cormorant">Dr. Alessandro Marchetti</h4>
+                                <p class="text-gray-300 crimson">Luxury Travel Critic & Michelin Inspector</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="glass-premium rounded-3xl p-12 text-center max-w-4xl mx-auto luxury-border" data-aos="fade-up">
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-quote-left text-4xl text-yellow-400 opacity-50"></i>
+                            </div>
+                            <p class="text-white text-2xl mb-8 italic cormorant leading-relaxed">"Our platinum anniversary celebration at Alpine Haven was nothing short of magical. The private concert in the snow garden, the seven-course molecular gastronomy dinner, and the Northern Lights viewing from our penthouse will forever remain in our hearts."</p>
+                            <div class="flex justify-center mb-6">
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                                <i class="fas fa-star text-yellow-400 mx-1"></i>
+                            </div>
+                            <div class="text-white">
+                                <h4 class="font-semibold text-xl cormorant">Mr. & Mrs. Hiroshi Tanaka</h4>
+                                <p class="text-gray-300 crimson">International Business Leaders</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination mt-12"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-24 winter-bg-3 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-6xl font-bold cormorant text-gray-800 text-center mb-8" data-aos="fade-up">Reserve Your Escape</h2>
+            <div class="luxury-divider" data-aos="fade-up" data-aos-delay="100"></div>
+            <p class="text-center text-gray-600 text-xl crimson max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="200">
+                Begin your journey into alpine luxury with our exclusive booking experience
+            </p>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="luxury-border rounded-3xl p-12 bg-white" data-aos="fade-up" data-aos-delay="300">
+                    <form id="booking-form" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Arrival Date</label>
+                            <input type="date" name="arrival" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input">
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Departure Date</label>
+                            <input type="date" name="departure" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input">
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Distinguished Guests</label>
+                            <select name="guests" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input">
+                                <option value="">Select number of guests</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5+">5+ Guests</option>
+                            </select>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Accommodation Preference</label>
+                            <select name="room" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input">
+                                <option value="">Select room type</option>
+                                <option value="alpine">Alpine Suite</option>
+                                <option value="royal">Royal Penthouse</option>
+                                <option value="cabin">Winter Cabin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Full Name</label>
+                            <input type="text" name="name" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input" placeholder="Enter your distinguished name">
+                        </div>
+                        
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Email Address</label>
+                            <input type="email" name="email" required class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input" placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="block text-gray-700 font-semibold mb-3 cormorant text-lg">Special Requests & Preferences</label>
+                            <textarea name="requests" rows="5" class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-4 focus:ring-yellow-200 focus:border-yellow-400 transition-all duration-300 luxury-input" placeholder="Please share any special accommodations, dietary requirements, or celebration details..."></textarea>
+                        </div>
+                        
+                        <div class="md:col-span-2 text-center mt-8">
+                            <button type="submit" class="magnetic-btn text-black px-16 py-5 rounded-full text-xl font-semibold transition-all duration-300 shadow-2xl will-change cormorant">
+                                <i class="fas fa-gem mr-3"></i>
+                                Reserve Your Alpine Sanctuary
+                            </button>
+                            <p class="text-gray-500 mt-4 crimson">Our concierge team will contact you within 2 hours to confirm your exclusive reservation</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 luxury-bg text-white relative">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-2">
+                    <h3 class="text-4xl font-bold cormorant mb-6 text-shimmer">Alpine Haven</h3>
+                    <div class="luxury-divider mb-6"></div>
+                    <p class="text-gray-300 mb-8 leading-relaxed crimson text-lg">
+                        Where alpine majesty meets uncompromising luxury. Experience the extraordinary in the heart of the world's most pristine mountain sanctuary.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center hover-scale transition-all duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-br from-pink-400 to-red-500 rounded-full flex items-center justify-center hover-scale transition-all duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-br from-blue-300 to-blue-500 rounded-full flex items-center justify-center hover-scale transition-all duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center hover-scale transition-all duration-300">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-2xl font-semibold mb-6 cormorant">Contact Information</h4>
+                    <div class="space-y-4">
+                        <p class="flex items-center text-gray-300">
+                            <i class="fas fa-map-marker-alt mr-4 text-yellow-400"></i>
+                            <span class="crimson">123 Alpine Ridge<br>Mountain View, CO 80424</span>
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <i class="fas fa-phone mr-4 text-yellow-400"></i>
+                            <span class="crimson">+1 (555) 123-4567</span>
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <i class="fas fa-envelope mr-4 text-yellow-400"></i>
+                            <span class="crimson">reservations@alpinehaven.com</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-2xl font-semibold mb-6 cormorant">Resort Links</h4>
+                    <div class="space-y-3">
+                        <a href="#about" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Our Heritage</a>
+                        <a href="#rooms" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Luxury Suites</a>
+                        <a href="#amenities" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Exclusive Amenities</a>
+                        <a href="#booking" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Private Reservations</a>
+                        <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Alpine Gallery</a>
+                        <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors crimson hover-scale">Guest Charter</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-600 mt-16 pt-10 text-center">
+                <p class="text-gray-300 crimson text-lg">
+                    © 2024 Alpine Haven Resort. All rights reserved. | Crafted with ❄ for the world's most distinguished travelers.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Enhanced Room Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content glass-premium rounded-3xl p-10 max-w-4xl mx-4 luxury-border">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-4xl font-bold cormorant text-white text-shimmer">Alpine Suite</h3>
+                <button onclick="closeModal('modal1')" class="text-white text-3xl hover:text-yellow-400 transition-colors hover-scale">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-white">
+                <div class="h-80 bg-gradient-to-br from-blue-500 to-purple-700 rounded-2xl mb-8 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-mountain text-8xl text-white opacity-30"></i>
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                </div>
+                <p class="mb-6 crimson text-lg leading-relaxed">Experience the pinnacle of alpine luxury in our signature suite, where every detail has been meticulously crafted to provide an unforgettable mountain retreat with breathtaking panoramic views.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">750 sq ft of sophisticated luxury</span></li>
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">Private heated balcony with mountain vistas</span></li>
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">Italian marble fireplace with seating area</span></li>
+                    </ul>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">Carrara marble bathroom with deep soaking tub</span></li>
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">Egyptian cotton linens and goose down bedding</span></li>
+                        <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-3"></i><span class="crimson">24/7 personal concierge service</span></li>
+                    </ul>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-4xl font-bold cormorant text-yellow-400">$450<span class="text-xl">/night</span></span>
+                    <button class="magnetic-btn text-black px-8 py-4 rounded-xl font-semibold cormorant text-lg" onclick="reserveRoom('Alpine Suite')">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content glass-premium rounded-3xl p-10 max-w-4xl mx-4 luxury-border">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-4xl font-bold cormorant text-white text-shimmer">Royal Penthouse</h3>
+                <button onclick="closeModal('modal2')" class="text-white text-3xl hover:text-yellow-400 transition-colors hover-scale">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-white">
+                <div class="h-80 bg-gradient-to-br from-purple-500 to-pink-700 rounded-2xl mb-8 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-crown text-8xl text-white opacity-30 pulse-glow"></i>
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                </div>
+                <p class="mb-6 crimson text-lg leading-relaxed">The crown jewel of Alpine Haven, our Royal Penthouse offers an unparalleled luxury experience across two magnificent floors with premium services befitting royalty.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">1,500 sq ft two-story penthouse</span></li>
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">360-degree mountain panoramic views</span></li>
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">Private Michelin-trained chef service</span></li>
+                    </ul>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">In-suite spa treatment sanctuary</span></li>
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">Private heated infinity pool on terrace</span></li>
+                        <li class="flex items-center"><i class="fas fa-crown text-yellow-400 mr-3"></i><span class="crimson">Curated rare wine collection included</span></li>
+                    </ul>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-4xl font-bold cormorant text-yellow-400">$850<span class="text-xl">/night</span></span>
+                    <button class="magnetic-btn text-black px-8 py-4 rounded-xl font-semibold cormorant text-lg" onclick="reserveRoom('Royal Penthouse')">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content glass-premium rounded-3xl p-10 max-w-4xl mx-4 luxury-border">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-4xl font-bold cormorant text-white text-shimmer">Winter Cabin</h3>
+                <button onclick="closeModal('modal3')" class="text-white text-3xl hover:text-yellow-400 transition-colors hover-scale">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-white">
+                <div class="h-80 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl mb-8 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-home text-8xl text-white opacity-30"></i>
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                </div>
+                <p class="mb-6 crimson text-lg leading-relaxed">Perfect for families and intimate groups, our Winter Cabin seamlessly blends rustic alpine charm with contemporary luxury amenities in the heart of winter paradise.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">1,200 sq ft family sanctuary</span></li>
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">Separate luxury bedrooms for 6 guests</span></li>
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">Gourmet kitchen with premium appliances</span></li>
+                    </ul>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">Stone fireplace and entertainment room</span></li>
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">Private deck with hot tub and views</span></li>
+                        <li class="flex items-center"><i class="fas fa-heart text-yellow-400 mr-3"></i><span class="crimson">Complimentary premium winter gear</span></li>
+                    </ul>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-4xl font-bold cormorant text-yellow-400">$320<span class="text-xl">/night</span></span>
+                    <button class="magnetic-btn text-black px-8 py-4 rounded-xl font-semibold cormorant text-lg" onclick="reserveRoom('Winter Cabin')">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const hoverElements = document.querySelectorAll('a, button, .hover-scale, .premium-card, .magnetic-btn');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-hover');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-hover');
+            });
+        });
+
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize AOS with enhanced settings
+        AOS.init({
+            duration: 1200,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Enhanced Snow Animation
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            const symbols = ['❄', '❅', '❆'];
+            snowflake.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.fontSize = Math.random() * 15 + 8 + 'px';
+            snowflake.style.animationDuration = Math.random() * 15 + 10 + 's';
+            snowflake.style.opacity = Math.random() * 0.6 + 0.3;
+            
+            document.getElementById('snow-container').appendChild(snowflake);
+            
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                }
+            }, 25000);
+        }
+
+        setInterval(createSnowflake, 200);
+
+        // Initialize Enhanced Swiper
+        const swiper = new Swiper('.testimonial-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 6000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true
+            },
+            speed: 1000,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.ceil(current);
+                    }
+                }, 30);
+            });
+        }
+
+        // Trigger counter animation when in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        const counterSection = document.querySelector('.counter');
+        if (counterSection) {
+            observer.observe(counterSection.closest('div'));
+        }
+
+        // Enhanced Magnetic Button Effect
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0) scale(1)';
+            });
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            });
+        });
+
+        // Enhanced Tilt Effect
+        document.querySelectorAll('.tilt').forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Enhanced Modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    const modalId = modal.id;
+                    closeModal(modalId);
+                }
+            });
+        });
+
+        // Smooth scrolling functions
+        function scrollToBooking() {
+            const bookingSection = document.getElementById('booking');
+            bookingSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Reserve room function
+        function reserveRoom(roomType) {
+            // Close modal first
+            const modals = document.querySelectorAll('.modal.active');
+            modals.forEach(modal => {
+                closeModal(modal.id);
+            });
+            
+            // Scroll to booking section
+            setTimeout(() => {
+                scrollToBooking();
+                
+                // Pre-fill room type
+                const roomSelect = document.querySelector('select[name="room"]');
+                if (roomSelect) {
+                    const roomValue = roomType.toLowerCase().includes('alpine') ? 'alpine' : 
+                                    roomType.toLowerCase().includes('royal') ? 'royal' : 'cabin';
+                    roomSelect.value = roomValue;
+                }
+                
+                // Show success notification
+                showNotification(`${roomType} selected! Please complete your reservation below.`, 'success');
+            }, 500);
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            
+            if (type === 'success') {
+                notification.classList.add('success');
+            } else {
+                notification.classList.remove('success');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Enhanced smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Enhanced navbar on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.4)';
+                navbar.style.backdropFilter = 'blur(30px)';
+            } else {
+                navbar.style.background = 'rgba(212, 175, 55, 0.1)';
+                navbar.style.backdropFilter = 'blur(25px)';
+            }
+        });
+
+        // Enhanced form submission with validation
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Validate required fields
+            const requiredFields = ['arrival', 'departure', 'guests', 'room', 'name', 'email'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!data[field]) {
+                    isValid = false;
+                    const input = document.querySelector(`[name="${field}"]`);
+                    input.style.borderColor = '#ef4444';
+                    setTimeout(() => {
+                        input.style.borderColor = '#d1d5db';
+                    }, 3000);
+                }
+            });
+            
+            if (!isValid) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Validate dates
+            const arrivalDate = new Date(data.arrival);
+            const departureDate = new Date(data.departure);
+            const today = new Date();
+            
+            if (arrivalDate <= today) {
+                showNotification('Arrival date must be in the future.', 'error');
+                return;
+            }
+            
+            if (departureDate <= arrivalDate) {
+                showNotification('Departure date must be after arrival date.', 'error');
+                return;
+            }
+            
+            // Show success animation
+            const button = e.target.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-check mr-2"></i>Confirming Reservation...';
+            button.classList.add('success-animation');
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Reservation Confirmed!';
+                button.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+                button.style.color = 'white';
+                
+                // Show success notification
+                showNotification('Reservation confirmed! Our concierge team will contact you within 2 hours.', 'success');
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    this.reset();
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(45deg, #d4af37, #f4e467)';
+                    button.style.color = 'black';
+                    button.classList.remove('success-animation');
+                    button.disabled = false;
+                }, 3000);
+            }, 2000);
+        });
+
+        // Add navigation underline effect
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.borderBottom = '2px solid #d4af37';
+                this.style.paddingBottom = '2px';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.borderBottom = 'none';
+                this.style.paddingBottom = '0';
+            });
+        });
+
+        // Enhanced input focus effects
+        document.querySelectorAll('.luxury-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.3)';
+                this.style.borderColor = '#d4af37';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+                this.style.borderColor = '#d1d5db';
+            });
+        });
+
+        // Performance optimization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add GPU acceleration to animated elements
+            const animatedElements = document.querySelectorAll('.premium-card, .magnetic-btn, .hover-scale');
+            animatedElements.forEach(el => {
+                el.style.willChange = 'transform';
+                el.style.backfaceVisibility = 'hidden';
+                el.style.perspective = '1000px';
+            });
+        });
+
+        // Intersection Observer for performance
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.willChange = 'transform';
+                } else {
+                    entry.target.style.willChange = 'auto';
+                }
+            });
+        });
+
+        document.querySelectorAll('.premium-card').forEach(card => {
+            animationObserver.observe(card);
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            // Close modals with Escape key
+            if (e.key === 'Escape') {
+                const activeModals = document.querySelectorAll('.modal.active');
+                activeModals.forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+
+        // Accessibility improvements
+        document.querySelectorAll('.premium-card, .magnetic-btn').forEach(element => {
+            element.setAttribute('tabindex', '0');
+            element.setAttribute('role', 'button');
+            
+            element.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
